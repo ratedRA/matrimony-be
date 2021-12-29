@@ -1,0 +1,49 @@
+
+
+
+
+
+
+User:
+1.User can register themselves and login
+// email/phone (passwordless)--> Some default credits:100c (editable by admin)
+
+2.Edit profile, DOB, One profile picture , About (short summary), Profile ID.
+--> 1 pic,
+3.Hide Profile or Picture or Contact Info
+// Privacy control
+
+4.Verification Flag (tick arrow) (controlled from admin panel)
+// Verified by 
+
+--> Blocking user
+
+5.Notifications on intrest/request receives with options -> ACCEPT, DECLINE
+
+
+6.OTP login mailid/sms (based on price)
+---> DOne
+
+7.Payment QR, Amazon pay, Google Pay (Optional)
+--> TBD
+
+8.Chat option on accept (Optional)
+
+
+Admin:
+1.Admin basic View with profile ID's , Email and contact information, 
+2.User profile enable/disable/verification
+3.Credits for Payment transaction and Invoice Billing details
+4.Support Chat with user or sending notification
+
+
+
+Design:
+1.Page 1 - Register/Login with Quick search option. (No login required)
+2.Page 2 - Serach results with Filter 
+3.Page 3 - My profle & Incomming requests.
+
+
+
+
+
