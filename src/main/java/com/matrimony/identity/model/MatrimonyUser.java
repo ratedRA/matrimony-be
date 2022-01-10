@@ -1,13 +1,22 @@
-package com.matrimony.identity.data;
+package com.matrimony.identity.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
+@Document(value = "user")
 public class MatrimonyUser implements Serializable {
+
+    @Id
+    private String id;
 
     // credentials
     // private String userName -> should be same as phone number;
     private String password;
-    private Long userId;
+    @Indexed(unique = true)
+    private String userId;
 
     // personal info
     private String firstName;
@@ -16,24 +25,48 @@ public class MatrimonyUser implements Serializable {
     private String dob;
 
     // contact info
+    @Indexed(unique = true)
     private String phoneNumber;
+    private String countryCode;
     private String country;
     private String State;
     private String District;
 
     // site info
     private Boolean verified = Boolean.FALSE;
+    private String lastSentOtp;
+
+    public MatrimonyUser(String phoneNumber, String countryCode) {
+        this.phoneNumber = phoneNumber;
+        this.countryCode = countryCode;
+    }
 
     public String getPassword() {
         return password;
     }
 
-    public Long getUserId() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public void setPassword(String password) {
@@ -110,5 +143,13 @@ public class MatrimonyUser implements Serializable {
 
     public void setVerified(Boolean verified) {
         this.verified = verified;
+    }
+
+    public String getLastSentOtp() {
+        return lastSentOtp;
+    }
+
+    public void setLastSentOtp(String lastSentOtp) {
+        this.lastSentOtp = lastSentOtp;
     }
 }

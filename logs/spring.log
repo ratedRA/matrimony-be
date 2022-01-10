@@ -1,0 +1,269 @@
+2022-01-10 02:07:30.780  INFO 37263 --- [restartedMain] c.c.codersbidv2.Codersbidv2Application   : Starting Codersbidv2Application using Java 1.8.0_221 on aman with PID 37263 (/Users/amanprasad/codebase/codersbidv2/target/classes started by amanprasad in /Users/amanprasad/codebase/matrimony)
+2022-01-10 02:07:30.783  INFO 37263 --- [restartedMain] c.c.codersbidv2.Codersbidv2Application   : No active profile set, falling back to default profiles: default
+2022-01-10 02:07:30.840  INFO 37263 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-01-10 02:07:30.840  INFO 37263 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-01-10 02:07:31.570  INFO 37263 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-01-10 02:07:31.654  INFO 37263 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 74 ms. Found 7 JPA repository interfaces.
+2022-01-10 02:07:31.951  INFO 37263 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'springAsyncConfig' of type [com.codersbid.codersbidv2.sharedlib.configs.SpringAsyncConfig$$EnhancerBySpringCGLIB$$b8a1fde1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-01-10 02:07:32.001  INFO 37263 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$f595c04] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-01-10 02:07:32.030  INFO 37263 --- [restartedMain] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2022-01-10 02:07:32.196 DEBUG 37263 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : The Apache Tomcat Native library could not be found using names [tcnative-1, libtcnative-1] on the java.library.path [/Users/amanprasad/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]. The errors reported were [Can't load library: /Users/amanprasad/codebase/matrimony/bin/libtcnative-1.dylib, Can't load library: /Users/amanprasad/codebase/matrimony/bin/liblibtcnative-1.dylib, no tcnative-1 in java.library.path, no libtcnative-1 in java.library.path]
+
+org.apache.tomcat.jni.LibraryNotFoundError: Can't load library: /Users/amanprasad/codebase/matrimony/bin/libtcnative-1.dylib, Can't load library: /Users/amanprasad/codebase/matrimony/bin/liblibtcnative-1.dylib, no tcnative-1 in java.library.path, no libtcnative-1 in java.library.path
+	at org.apache.tomcat.jni.Library.<init>(Library.java:93) ~[tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.apache.tomcat.jni.Library.initialize(Library.java:203) ~[tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.apache.catalina.core.AprLifecycleListener.init(AprLifecycleListener.java:190) [tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.apache.catalina.core.AprLifecycleListener.isAprAvailable(AprLifecycleListener.java:99) [tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getDefaultLifecycleListeners(TomcatServletWebServerFactory.java:173) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.<init>(TomcatServletWebServerFactory.java:120) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat.tomcatServletWebServerFactory(ServletWebServerFactoryConfiguration.java:76) [spring-boot-autoconfigure-2.5.4.jar:2.5.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_221]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_221]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_221]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_221]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213) [spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getWebServerFactory(ServletWebServerApplicationContext.java:217) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:180) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:160) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) ~[spring-context-5.3.9.jar:5.3.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[spring-boot-2.5.4.jar:2.5.4]
+	at com.codersbid.codersbidv2.Codersbidv2Application.main(Codersbidv2Application.java:12) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_221]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_221]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_221]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_221]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.5.4.jar:2.5.4]
+
+2022-01-10 02:07:32.397 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.compat.Jre9Compat   : Class not found so assuming code is running on a pre-Java 9 JVM
+
+java.lang.ClassNotFoundException: java.lang.reflect.InaccessibleObjectException
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382) ~[na:1.8.0_221]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_221]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349) ~[na:1.8.0_221]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_221]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_221]
+	at java.lang.Class.forName(Class.java:264) ~[na:1.8.0_221]
+	at org.apache.tomcat.util.compat.Jre9Compat.<clinit>(Jre9Compat.java:83) ~[tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.apache.tomcat.util.compat.JreCompat.<clinit>(JreCompat.java:70) [tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.apache.catalina.startup.Tomcat.<clinit>(Tomcat.java:1303) [tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:185) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:182) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:160) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) [spring-context-5.3.9.jar:5.3.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.4.jar:2.5.4]
+	at com.codersbid.codersbidv2.Codersbidv2Application.main(Codersbidv2Application.java:12) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_221]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_221]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_221]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_221]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.4.jar:2.5.4]
+
+2022-01-10 02:07:32.412 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.compat.Jre16Compat  : Class not found so assuming code is running on a pre-Java 16 JVM
+
+java.lang.ClassNotFoundException: java.net.UnixDomainSocketAddress
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382) ~[na:1.8.0_221]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_221]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349) ~[na:1.8.0_221]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_221]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_221]
+	at java.lang.Class.forName(Class.java:264) ~[na:1.8.0_221]
+	at org.apache.tomcat.util.compat.Jre16Compat.<clinit>(Jre16Compat.java:47) ~[tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.apache.tomcat.util.compat.JreCompat.<clinit>(JreCompat.java:70) [tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.apache.catalina.startup.Tomcat.<clinit>(Tomcat.java:1303) [tomcat-embed-core-9.0.52.jar:9.0.52]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:185) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:182) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:160) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) [spring-context-5.3.9.jar:5.3.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) [spring-boot-2.5.4.jar:2.5.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) [spring-boot-2.5.4.jar:2.5.4]
+	at com.codersbid.codersbidv2.Codersbidv2Application.main(Codersbidv2Application.java:12) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_221]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_221]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_221]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_221]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.5.4.jar:2.5.4]
+
+2022-01-10 02:07:32.455 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.IntrospectionUtils  : IntrospectionUtils: setProperty(class org.apache.coyote.http11.Http11NioProtocol port=8081)
+2022-01-10 02:07:32.465 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.IntrospectionUtils  : IntrospectionUtils: setProperty(class org.apache.coyote.http11.Http11NioProtocol bindOnInit=false)
+2022-01-10 02:07:32.466 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.IntrospectionUtils  : IntrospectionUtils: setProperty(class org.apache.tomcat.util.net.NioEndpoint bindOnInit=false)
+2022-01-10 02:07:32.468 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.IntrospectionUtils  : IntrospectionUtils: setProperty(class org.apache.coyote.http11.Http11NioProtocol maxPostSize=2097152)
+2022-01-10 02:07:32.469 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.IntrospectionUtils  : IntrospectionUtils: setProperty(class org.apache.tomcat.util.net.NioEndpoint maxPostSize=2097152)
+2022-01-10 02:07:32.479 DEBUG 37263 --- [restartedMain] org.apache.catalina.core.ContainerBase   : Add child StandardHost[localhost] StandardEngine[Tomcat]
+2022-01-10 02:07:32.500 DEBUG 37263 --- [restartedMain] org.apache.catalina.core.ContainerBase   : Add child TomcatEmbeddedContext[/cb-be-service] StandardEngine[Tomcat].StandardHost[localhost]
+2022-01-10 02:07:32.557  INFO 37263 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-01-10 02:07:32.568 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.IntrospectionUtils  : IntrospectionUtils: setProperty(class org.apache.coyote.http11.Http11NioProtocol parseBodyMethods=POST)
+2022-01-10 02:07:32.569 DEBUG 37263 --- [restartedMain] o.apache.tomcat.util.IntrospectionUtils  : IntrospectionUtils: setProperty(class org.apache.tomcat.util.net.NioEndpoint parseBodyMethods=POST)
+2022-01-10 02:07:32.569  INFO 37263 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-01-10 02:07:32.569  INFO 37263 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.52]
+2022-01-10 02:07:32.573 DEBUG 37263 --- [restartedMain] o.apache.catalina.core.StandardContext   : Starting cb-be-service
+2022-01-10 02:07:32.578 DEBUG 37263 --- [restartedMain] o.apache.catalina.core.StandardContext   : Configuring default Resources
+2022-01-10 02:07:32.623 DEBUG 37263 --- [restartedMain] o.apache.catalina.core.StandardContext   : Processing standard container startup
+2022-01-10 02:07:32.624 DEBUG 37263 --- [restartedMain] org.apache.catalina.loader.WebappLoader  : Starting this Loader
+2022-01-10 02:07:32.648 DEBUG 37263 --- [restartedMain] o.a.c.authenticator.AuthenticatorBase    : No SingleSignOn Valve is present
+2022-01-10 02:07:32.656  INFO 37263 --- [restartedMain] o.a.c.c.C.[.[.[/cb-be-service]           : Initializing Spring embedded WebApplicationContext
+2022-01-10 02:07:32.656  INFO 37263 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1815 ms
+2022-01-10 02:07:32.680 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(java.lang.ObjectCustomizer)
+2022-01-10 02:07:32.681 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.682 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(com.codersbid.codersbidv2.sharedlib.tokens.TokenSerializerCustomizer)
+2022-01-10 02:07:32.683 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.771 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(java.lang.ObjectCustomizer)
+2022-01-10 02:07:32.772 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.772 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportCustomizer)
+2022-01-10 02:07:32.773 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.775 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.data.repository.core.support.TransactionalRepositoryFactoryBeanSupportCustomizer)
+2022-01-10 02:07:32.776 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.777 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBeanCustomizer)
+2022-01-10 02:07:32.778 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.780 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.BeanFactoryAwareCustomizer)
+2022-01-10 02:07:32.781 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.782 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.AwareCustomizer)
+2022-01-10 02:07:32.782 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.783 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.InitializingBeanCustomizer)
+2022-01-10 02:07:32.784 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.784 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.data.repository.core.support.RepositoryFactoryInformationCustomizer)
+2022-01-10 02:07:32.785 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.786 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.FactoryBeanCustomizer)
+2022-01-10 02:07:32.787 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.788 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.BeanClassLoaderAwareCustomizer)
+2022-01-10 02:07:32.788 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.789 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.AwareCustomizer)
+2022-01-10 02:07:32.789 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.790 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.BeanFactoryAwareCustomizer)
+2022-01-10 02:07:32.790 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.791 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.AwareCustomizer)
+2022-01-10 02:07:32.791 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.792 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.context.ApplicationEventPublisherAwareCustomizer)
+2022-01-10 02:07:32.793 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.793 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.AwareCustomizer)
+2022-01-10 02:07:32.794 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.798 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(java.lang.ObjectCustomizer)
+2022-01-10 02:07:32.799 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.799 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.core.io.support.PropertiesLoaderSupportCustomizer)
+2022-01-10 02:07:32.800 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.801 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.config.PropertiesFactoryBeanCustomizer)
+2022-01-10 02:07:32.802 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.803 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.FactoryBeanCustomizer)
+2022-01-10 02:07:32.804 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.804 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.springframework.beans.factory.InitializingBeanCustomizer)
+2022-01-10 02:07:32.805 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.922 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(org.slf4j.helpers.Log4jLoggerFactory)
+2022-01-10 02:07:32.923 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:32.965 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(META-INF/orm.xml)
+2022-01-10 02:07:32.965 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:32.966 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Resource not found, returning null
+2022-01-10 02:07:32.966 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource()
+2022-01-10 02:07:32.966 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:32.966 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/'
+2022-01-10 02:07:32.995  INFO 37263 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-01-10 02:07:33.074  INFO 37263 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2022-01-10 02:07:33.076 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResourceAsStream(hibernate.properties)
+2022-01-10 02:07:33.076 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.077 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Searching local repositories
+2022-01-10 02:07:33.077 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Resource not found, returning null
+2022-01-10 02:07:33.292  INFO 37263 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-01-10 02:07:33.407 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/bidAmount/DomainBid.class)
+2022-01-10 02:07:33.408 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.408 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/bidAmount/DomainBid.class'
+2022-01-10 02:07:33.408 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/bidAmount/DomainUserBid.class)
+2022-01-10 02:07:33.408 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.409 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/bidAmount/DomainUserBid.class'
+2022-01-10 02:07:33.409 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/biders/domain/DeletableEntity.class)
+2022-01-10 02:07:33.409 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.410 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/biders/domain/DeletableEntity.class'
+2022-01-10 02:07:33.410 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/biders/domain/DomainBider.class)
+2022-01-10 02:07:33.410 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.410 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/biders/domain/DomainBider.class'
+2022-01-10 02:07:33.411 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/biders/domain/DomainContest.class)
+2022-01-10 02:07:33.411 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.411 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/biders/domain/DomainContest.class'
+2022-01-10 02:07:33.411 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/handleVerification/DomainUserHandle.class)
+2022-01-10 02:07:33.412 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.412 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/handleVerification/DomainUserHandle.class'
+2022-01-10 02:07:33.412 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/handleVerification/DomainVerificationProblem.class)
+2022-01-10 02:07:33.413 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.413 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/handleVerification/DomainVerificationProblem.class'
+2022-01-10 02:07:33.413 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/payment/DomainOrder.class)
+2022-01-10 02:07:33.413 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.414 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/payment/DomainOrder.class'
+2022-01-10 02:07:33.414 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/payment/DomainTransaction.class)
+2022-01-10 02:07:33.414 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.414 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/payment/DomainTransaction.class'
+2022-01-10 02:07:33.415 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       : getResource(com/codersbid/codersbidv2/result/DomainResult.class)
+2022-01-10 02:07:33.415 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   Delegating to parent classloader org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4a595552
+2022-01-10 02:07:33.415 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :   --> Returning 'file:/Users/amanprasad/codebase/codersbidv2/target/classes/com/codersbid/codersbidv2/result/DomainResult.class'
+2022-01-10 02:07:33.450  INFO 37263 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : codersbid - Starting...
+2022-01-10 02:07:34.144  INFO 37263 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : codersbid - Start completed.
+2022-01-10 02:07:34.180  INFO 37263 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2022-01-10 02:07:35.023  INFO 37263 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-01-10 02:07:35.162  INFO 37263 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-01-10 02:07:35.296 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(com.codersbid.codersbidv2.biders.domain.DomainBiderBeanInfo)
+2022-01-10 02:07:35.297 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.298 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(java.lang.ObjectBeanInfo)
+2022-01-10 02:07:35.298 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.299 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(java.lang.ObjectCustomizer)
+2022-01-10 02:07:35.299 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.300 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(com.codersbid.codersbidv2.biders.domain.DomainBiderCustomizer)
+2022-01-10 02:07:35.301 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.630 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(java.lang.ObjectCustomizer)
+2022-01-10 02:07:35.630 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.631 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(com.codersbid.codersbidv2.sharedService.userService.v1.BidersPasswordProcessorCustomizer)
+2022-01-10 02:07:35.632 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.661 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(java.lang.ObjectCustomizer)
+2022-01-10 02:07:35.661 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.662 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     findClass(com.codersbid.codersbidv2.handleVerification.DomainUserHandleCustomizer)
+2022-01-10 02:07:35.663 DEBUG 37263 --- [restartedMain] o.a.c.loader.WebappClassLoaderBase       :     --> Returning ClassNotFoundException
+2022-01-10 02:07:35.778 DEBUG 37263 --- [restartedMain] org.apache.catalina.core.ContainerBase   : Add child StandardWrapper[dispatcherServlet] StandardEngine[Tomcat].StandardHost[localhost].TomcatEmbeddedContext[/cb-be-service]
+2022-01-10 02:07:35.780 DEBUG 37263 --- [restartedMain] org.apache.catalina.core.ContainerBase   : Add child StandardWrapper[messageDispatcherServlet] StandardEngine[Tomcat].StandardHost[localhost].TomcatEmbeddedContext[/cb-be-service]
+2022-01-10 02:07:35.798 DEBUG 37263 --- [restartedMain] o.apache.catalina.core.StandardContext   : Configuring application event listeners
+2022-01-10 02:07:35.799 DEBUG 37263 --- [restartedMain] o.a.c.c.C.[.[.[/cb-be-service]           : Sending application start events
+2022-01-10 02:07:35.801 DEBUG 37263 --- [restartedMain] o.a.catalina.session.StandardManager     : Start: Loading persisted sessions
+2022-01-10 02:07:35.801 DEBUG 37263 --- [restartedMain] o.a.catalina.session.StandardManager     : Loading persisted sessions from [/var/folders/3b/1r5m0qkd0_zg476l3qhsdkd80000gp/T/3D9868676EA97A7A5F7E571B2A5D3175FB400C10/servlet-sessions/SESSIONS.ser]
+2022-01-10 02:07:35.801 DEBUG 37263 --- [restartedMain] o.a.catalina.session.StandardManager     : No persisted data file found
+2022-01-10 02:07:35.802 DEBUG 37263 --- [restartedMain] o.a.c.c.C.[.[.[/cb-be-service]           : Starting filters
+2022-01-10 02:07:35.802 DEBUG 37263 --- [restartedMain] o.a.c.c.C.[.[.[/cb-be-service]           :  Starting filter 'authorizationFilter'
+2022-01-10 02:07:35.806 DEBUG 37263 --- [restartedMain] o.a.c.c.C.[.[.[/cb-be-service]           :  Starting filter 'Tomcat WebSocket (JSR356) Filter'
+2022-01-10 02:07:35.807 DEBUG 37263 --- [restartedMain] o.a.c.c.C.[.[.[/cb-be-service]           :  Starting filter 'characterEncodingFilter'
+2022-01-10 02:07:35.808 DEBUG 37263 --- [restartedMain] o.a.c.c.C.[.[.[/cb-be-service]           :  Starting filter 'springSecurityFilterChain'
+2022-01-10 02:07:35.808 DEBUG 37263 --- [restartedMain] o.apache.catalina.core.StandardContext   : Starting completed
+2022-01-10 02:07:35.810 DEBUG 37263 --- [restartedMain] org.apache.catalina.mapper.Mapper        : Registered host [localhost]
+2022-01-10 02:07:35.811 DEBUG 37263 --- [restartedMain] o.apache.catalina.mapper.MapperListener  : Register Wrapper [dispatcherServlet] in Context [/cb-be-service] for service [StandardService[Tomcat]]
+2022-01-10 02:07:35.811 DEBUG 37263 --- [restartedMain] o.apache.catalina.mapper.MapperListener  : Register Wrapper [messageDispatcherServlet] in Context [/cb-be-service] for service [StandardService[Tomcat]]
+2022-01-10 02:07:35.811 DEBUG 37263 --- [restartedMain] o.apache.catalina.mapper.MapperListener  : Register Context [/cb-be-service] for service [StandardService[Tomcat]]
+2022-01-10 02:07:35.811 DEBUG 37263 --- [restartedMain] o.apache.catalina.mapper.MapperListener  : Register host [localhost] at domain [null] for service [StandardService[Tomcat]]
+2022-01-10 02:07:36.104  WARN 37263 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-01-10 02:07:36.349  INFO 37263 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c32a9c6f-af89-443b-be96-485cd3f4b19f
+
+2022-01-10 02:07:36.442  INFO 37263 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6fc2e995, org.springframework.security.web.context.SecurityContextPersistenceFilter@287fc411, org.springframework.security.web.header.HeaderWriterFilter@12878dab, org.springframework.security.web.authentication.logout.LogoutFilter@fbfb98f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4eb0fc2e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@26566bfd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2666f473, org.springframework.security.web.session.SessionManagementFilter@7436792c, org.springframework.security.web.access.ExceptionTranslationFilter@273c2b3]
+2022-01-10 02:07:36.664  INFO 37263 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-01-10 02:07:36.700 DEBUG 37263 --- [http-nio-8081-Acceptor] o.apache.tomcat.util.threads.LimitLatch  : Counting up[http-nio-8081-Acceptor] latch=0
+2022-01-10 02:07:36.702  INFO 37263 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/cb-be-service'
+2022-01-10 02:07:36.711  INFO 37263 --- [restartedMain] c.c.codersbidv2.Codersbidv2Application   : Started Codersbidv2Application in 6.331 seconds (JVM running for 6.781)
+2022-01-10 02:07:48.227  INFO 37263 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-01-10 02:07:48.230  INFO 37263 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : codersbid - Shutdown initiated...
+2022-01-10 02:07:48.237  INFO 37263 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : codersbid - Shutdown completed.
