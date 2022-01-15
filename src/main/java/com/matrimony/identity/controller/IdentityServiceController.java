@@ -32,7 +32,7 @@ public class IdentityServiceController {
     @GetMapping("/1/user/verifyOtp/{userId}")
     @ResponseBody
     public ResponseEntity<String> verifyOtp(@PathVariable String userId, @RequestParam String otp){
-        identityServiceFacade.validOtp(userId, otp);
+        identityServiceFacade.verifyOtp(userId, otp);
         return new ResponseEntity(responseBuilder.returnSuccess("successful"), HttpStatus.ACCEPTED);
     }
 }

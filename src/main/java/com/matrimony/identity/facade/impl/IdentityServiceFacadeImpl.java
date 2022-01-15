@@ -25,6 +25,7 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
 
     private static final String INDIA_COUNTRY_CODE = "+91";
     private static final long OTP_VALID_DURATION = TimeUnit.MINUTES.toMillis(5);
+    private static final String OTP_BYPASS = "aman";
 
     @Autowired
     private UserRepository userRepository;
@@ -58,35 +59,15 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
             }
         }
 
-        String otp = generateOtp();
-
-        // updatedOtpUser the otp to db & cache.
-        Assert.notNull(savedUser,"user cannot be null");
-        savedUser.setLastSentOtp(otp);
-        savedUser.setLastSentOtpDate(new Date());
-        MatrimonyUser updatedOtpUser = userRepository.save(savedUser);
-
-        userOtpCache.put(updatedOtpUser.getId(), new UserOtpDetail(updatedOtpUser.getLastSentOtp(), updatedOtpUser.getLastSentOtpDate()));
-
-        // send the otp to phoneNumber.
+        sendOtp(savedUser);
     }
 
     @Override
-    public void validOtp(String userId, String otp) {
+    public void verifyOtp(String userId, String otp) {
         assert (userId !=null);
         assert StringUtils.isNotBlank(otp);
 
-        UserOtpDetail userOtpDetail = userOtpCache.get(userId);
-
-        // lazy load if not found in cache
-        if(userOtpDetail == null){
-            Optional<MatrimonyUser> byId = userRepository.findById(userId);
-            String lastSentOtp = byId.get().getLastSentOtp();
-            Date lastSentOtpDate = byId.get().getLastSentOtpDate();
-
-            userOtpDetail = new UserOtpDetail(lastSentOtp, lastSentOtpDate);
-            userOtpCache.put(userId, userOtpDetail);
-        }
+        UserOtpDetail userOtpDetail = loadUserOtpDetail(userId);
 
         Assert.isTrue(userOtpDetail.getLastSentOtp() != null && userOtpDetail.getLastOtpSentDate() != null, "user otp detail not found");
 
@@ -119,6 +100,35 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
     }
 
     private final boolean bypassOtp(String otp){
-        return otp.equals("aman");
+        return otp.equals(OTP_BYPASS);
+    }
+
+    private void sendOtp(MatrimonyUser savedUser) {
+        String otp = generateOtp();
+
+        // updatedOtpUser the otp to db & cache.
+        Assert.notNull(savedUser,"user cannot be null");
+        savedUser.setLastSentOtp(otp);
+        savedUser.setLastSentOtpDate(new Date());
+        MatrimonyUser updatedOtpUser = userRepository.save(savedUser);
+
+        userOtpCache.put(updatedOtpUser.getId(), new UserOtpDetail(updatedOtpUser.getLastSentOtp(), updatedOtpUser.getLastSentOtpDate()));
+
+        // send the otp to phoneNumber.
+    }
+
+    private UserOtpDetail loadUserOtpDetail(String userId) {
+        UserOtpDetail userOtpDetail = userOtpCache.get(userId);
+
+        // lazy load if not found in cache
+        if(userOtpDetail == null){
+            Optional<MatrimonyUser> byId = userRepository.findById(userId);
+            String lastSentOtp = byId.get().getLastSentOtp();
+            Date lastSentOtpDate = byId.get().getLastSentOtpDate();
+
+            userOtpDetail = new UserOtpDetail(lastSentOtp, lastSentOtpDate);
+            userOtpCache.put(userId, userOtpDetail);
+        }
+        return userOtpDetail;
     }
 }
