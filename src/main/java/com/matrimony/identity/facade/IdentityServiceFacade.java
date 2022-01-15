@@ -7,5 +7,7 @@ public interface IdentityServiceFacade {
 
     void register(UserRegistrationRequest registrationRequest);
 
+    void validOtp(String userId, String otp);
+
     MatrimonyUser login();
 }

@@ -1,8 +1,9 @@
 package com.matrimony.common.exceptionhandling;
 
 import com.matrimony.common.ResponseBuilder;
-import com.matrimony.common.exceptionhandling.ApiError;
 import com.matrimony.common.exceptionhandling.customexceptions.DuplicateUserException;
+import com.matrimony.common.exceptionhandling.customexceptions.OtpExpiredException;
+import com.matrimony.common.exceptionhandling.customexceptions.OtpInvalidException;
 import com.matrimony.common.exceptionhandling.customexceptions.TokenExpiredException;
 import com.matrimony.common.exceptionhandling.customexceptions.TokenInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,18 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = {TokenExpiredException.class})
     @ResponseBody
     public final ResponseEntity<Object> handleTokenExpiredException(TokenExpiredException ex) {
+        return new ResponseEntity(responseBuilder.returnFailure(ex.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = {OtpInvalidException.class})
+    @ResponseBody
+    public final ResponseEntity<Object> handleOtpInvalidException(OtpInvalidException ex) {
+        return new ResponseEntity(responseBuilder.returnFailure(ex.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = {OtpExpiredException.class})
+    @ResponseBody
+    public final ResponseEntity<Object> handleOtpExpiredException(OtpExpiredException ex) {
         return new ResponseEntity(responseBuilder.returnFailure(ex.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
     }
 

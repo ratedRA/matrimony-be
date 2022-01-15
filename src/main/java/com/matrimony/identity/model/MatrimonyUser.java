@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Document(value = "user")
 public class MatrimonyUser implements Serializable {
@@ -15,8 +16,6 @@ public class MatrimonyUser implements Serializable {
     // credentials
     // private String userName -> should be same as phone number;
     private String password;
-    @Indexed(unique = true)
-    private String userId;
 
     // personal info
     private String firstName;
@@ -35,6 +34,11 @@ public class MatrimonyUser implements Serializable {
     // site info
     private Boolean verified = Boolean.FALSE;
     private String lastSentOtp;
+    private Date lastSentOtpDate;
+
+    // registration info
+    private Date createdDate;
+    private Date modifiedDate;
 
     public MatrimonyUser(String phoneNumber, String countryCode) {
         this.phoneNumber = phoneNumber;
@@ -54,11 +58,7 @@ public class MatrimonyUser implements Serializable {
     }
 
     public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+        return id;
     }
 
     public String getCountryCode() {
@@ -151,5 +151,29 @@ public class MatrimonyUser implements Serializable {
 
     public void setLastSentOtp(String lastSentOtp) {
         this.lastSentOtp = lastSentOtp;
+    }
+
+    public Date getLastSentOtpDate() {
+        return lastSentOtpDate;
+    }
+
+    public void setLastSentOtpDate(Date lastSentOtpDate) {
+        this.lastSentOtpDate = lastSentOtpDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 }
