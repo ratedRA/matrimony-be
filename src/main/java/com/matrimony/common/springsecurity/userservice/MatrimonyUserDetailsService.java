@@ -1,4 +1,4 @@
-package com.matrimony.identity.userservice;
+package com.matrimony.common.springsecurity.userservice;
 
 import com.matrimony.identity.model.MatrimonyUser;
 import com.matrimony.identity.repository.mongo.UserRepository;
@@ -18,8 +18,8 @@ public class MatrimonyUserDetailsService implements UserDetailsService {
     UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        MatrimonyUser matrimonyUser = userRepository.findByPhone(userId).get(0);
+    public UserDetails loadUserByUsername(String phoneNo) throws UsernameNotFoundException {
+        MatrimonyUser matrimonyUser = userRepository.findByPhone(phoneNo).get(0);
         User securityUser = new User(matrimonyUser.getUserId(), matrimonyUser.getPassword(), new ArrayList<>());
         return securityUser;
     }

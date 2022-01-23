@@ -1,7 +1,8 @@
 package com.matrimony.config;
 
 
-import com.matrimony.identity.userservice.MatrimonyUserDetailsService;
+import com.matrimony.common.springsecurity.filter.AuthenticationTokenRequestFilter;
+import com.matrimony.common.springsecurity.userservice.MatrimonyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,14 +11,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class CustomSpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MatrimonyUserDetailsService userDetailsService;
+
+    @Autowired
+    private AuthenticationTokenRequestFilter authenticationTokenRequestFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -27,8 +33,16 @@ public class CustomSpringSecurityConfigurer extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/**").permitAll()
-                .anyRequest().authenticated();
+                .authorizeRequests().antMatchers("/1/user/login").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/1/user/register").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/pub/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(authenticationTokenRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

@@ -11,4 +11,6 @@ public interface IdentityServiceFacade {
     void verifyOtp(String userId, String otp, String password);
 
     MatrimonyUser login(LoginRequest loginRequest);
+
+    MatrimonyUser getAuthenticatedUser();
 }

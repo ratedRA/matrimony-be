@@ -17,6 +17,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -93,6 +96,7 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
 
         Map<String, String> claims = new HashMap<>();
         claims.put("userId", matrimonyUser.getId());
+        claims.put("phone", matrimonyUser.getPhoneNumber());
         claims.put("verified", matrimonyUser.getVerified().toString());
 
         String jwt = jjwt.generateJwt(claims, 180l);
@@ -129,6 +133,14 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         }
         createPassword(password, matrimonyUser);
         markUserVerified(matrimonyUser);
+    }
+
+    @Override
+    public MatrimonyUser getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails authenticatedUser = (UserDetails) authentication.getPrincipal();
+        MatrimonyUser matrimonyUser = loadUserById(authenticatedUser.getUsername());
+        return matrimonyUser;
     }
 
     private void createPassword(String password, MatrimonyUser matrimonyUser) {
