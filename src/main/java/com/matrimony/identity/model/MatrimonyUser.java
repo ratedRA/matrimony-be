@@ -1,6 +1,8 @@
 package com.matrimony.identity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,7 +17,9 @@ public class MatrimonyUser implements Serializable {
 
     // credentials
     // private String userName -> should be same as phone number;
+    @JsonIgnore
     private String password;
+    private String authenticationToken;
 
     // personal info
     private String firstName;
@@ -175,5 +179,13 @@ public class MatrimonyUser implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public String getAuthenticationToken() {
+        return authenticationToken;
+    }
+
+    public void setAuthenticationToken(String authenticationToken) {
+        this.authenticationToken = authenticationToken;
     }
 }

@@ -2,6 +2,8 @@ package com.matrimony.identity.facade.impl;
 
 import com.matrimony.common.GuavaCache;
 import com.matrimony.common.exceptionhandling.customexceptions.DuplicateUserException;
+import com.matrimony.common.matrimonytoken.JjwtImpl;
+import com.matrimony.identity.data.LoginRequest;
 import com.matrimony.identity.data.UserOtpDetail;
 import com.matrimony.identity.data.UserRegistrationRequest;
 import com.matrimony.identity.facade.IdentityServiceFacade;
@@ -12,10 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -34,11 +42,20 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    @Qualifier("userOtpCache")
-    private GuavaCache<String, UserOtpDetail> userOtpCache;
+    @Qualifier("userCache")
+    private GuavaCache<String, MatrimonyUser> userCache;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JjwtImpl jjwt;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public void register(UserRegistrationRequest registrationRequest) {
+    public MatrimonyUser register(UserRegistrationRequest registrationRequest) {
         Assert.notNull(registrationRequest, "registration request is required");
 
         String phoneNumber = registrationRequest.getPhoneNumber();
@@ -60,18 +77,43 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         }
 
         sendOtp(savedUser);
+
+        return savedUser;
     }
 
     @Override
-    public void verifyOtp(String userId, String otp) {
+    public MatrimonyUser login(LoginRequest loginRequest) {
+        try{
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getPhoneNo(), loginRequest.getPassword()));
+        } catch (BadCredentialsException ex){
+            throw new RuntimeException("incorrect username or password", ex);
+        }
+
+        MatrimonyUser matrimonyUser = userRepository.findByPhone(loginRequest.getPhoneNo()).get(0);
+
+        Map<String, String> claims = new HashMap<>();
+        claims.put("userId", matrimonyUser.getId());
+        claims.put("verified", matrimonyUser.getVerified().toString());
+
+        String jwt = jjwt.generateJwt(claims, 180l);
+        matrimonyUser.setAuthenticationToken(jwt);
+
+        return matrimonyUser;
+    }
+
+    @Override
+    public void verifyOtp(String userId, String otp, String password) {
         assert (userId !=null);
         assert StringUtils.isNotBlank(otp);
 
-        UserOtpDetail userOtpDetail = loadUserOtpDetail(userId);
+        MatrimonyUser matrimonyUser = loadUserById(userId);
+        UserOtpDetail userOtpDetail = loadUserOtpDetail(matrimonyUser);
 
         Assert.isTrue(userOtpDetail.getLastSentOtp() != null && userOtpDetail.getLastOtpSentDate() != null, "user otp detail not found");
 
         if(bypassOtp(otp)){
+            createPassword(password, matrimonyUser);
+            markUserVerified(matrimonyUser);
             return;
         }
 
@@ -85,11 +127,18 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
             // OTP expires
             throw new RuntimeException("Otp has been expired");
         }
+        createPassword(password, matrimonyUser);
+        markUserVerified(matrimonyUser);
     }
 
-    @Override
-    public MatrimonyUser login() {
-        return null;
+    private void createPassword(String password, MatrimonyUser matrimonyUser) {
+        String encodedPassword = passwordEncoder.encode(password);
+        matrimonyUser.setPassword(encodedPassword);
+    }
+
+    private void markUserVerified(MatrimonyUser matrimonyUser) {
+        matrimonyUser.setVerified(true);
+        userRepository.save(matrimonyUser);
     }
 
     private String generateOtp(){
@@ -112,23 +161,29 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         savedUser.setLastSentOtpDate(new Date());
         MatrimonyUser updatedOtpUser = userRepository.save(savedUser);
 
-        userOtpCache.put(updatedOtpUser.getId(), new UserOtpDetail(updatedOtpUser.getLastSentOtp(), updatedOtpUser.getLastSentOtpDate()));
+        userCache.put(updatedOtpUser.getId(), updatedOtpUser);
 
         // send the otp to phoneNumber.
     }
 
-    private UserOtpDetail loadUserOtpDetail(String userId) {
-        UserOtpDetail userOtpDetail = userOtpCache.get(userId);
+    private UserOtpDetail loadUserOtpDetail(MatrimonyUser userById) {
+        return new UserOtpDetail(userById.getLastSentOtp(), userById.getLastSentOtpDate());
+    }
+
+    private MatrimonyUser loadUserById(String userId) {
+        MatrimonyUser userById = userCache.get(userId);
 
         // lazy load if not found in cache
-        if(userOtpDetail == null){
-            Optional<MatrimonyUser> byId = userRepository.findById(userId);
-            String lastSentOtp = byId.get().getLastSentOtp();
-            Date lastSentOtpDate = byId.get().getLastSentOtpDate();
+        if(userById == null){
+            Optional<MatrimonyUser> optionalUser = userRepository.findById(userId);
+            userById = optionalUser.get();
+            String lastSentOtp = userById.getLastSentOtp();
+            Date lastSentOtpDate = userById.getLastSentOtpDate();
 
-            userOtpDetail = new UserOtpDetail(lastSentOtp, lastSentOtpDate);
-            userOtpCache.put(userId, userOtpDetail);
+            userById.setLastSentOtp(lastSentOtp);
+            userById.setLastSentOtpDate(lastSentOtpDate);
+            userCache.put(userById.getId(), userById);
         }
-        return userOtpDetail;
+        return userById;
     }
 }
