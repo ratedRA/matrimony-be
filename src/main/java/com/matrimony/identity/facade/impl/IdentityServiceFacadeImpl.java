@@ -118,7 +118,14 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         if(bypassOtp(otp)){
             createPassword(password, matrimonyUser);
             markUserVerified(matrimonyUser);
-            return;
+
+            Map<String, String> claims = new HashMap<>();
+            claims.put("userId", matrimonyUser.getId());
+            claims.put("phone", matrimonyUser.getPhoneNumber());
+            claims.put("verified", matrimonyUser.getVerified().toString());
+            String jwt = jjwt.generateJwt(claims, 180l);
+
+            return jwt;
         }
 
         long currentTimeInMillis = System.currentTimeMillis();
