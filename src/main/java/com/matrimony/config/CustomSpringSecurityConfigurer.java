@@ -38,6 +38,8 @@ public class CustomSpringSecurityConfigurer extends WebSecurityConfigurerAdapter
                 .authorizeRequests().antMatchers("/1/user/register").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/pub/**").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
