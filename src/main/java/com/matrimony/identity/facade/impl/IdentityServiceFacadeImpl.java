@@ -94,12 +94,7 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
 
         MatrimonyUser matrimonyUser = userRepository.findByPhone(loginRequest.getPhoneNo()).get(0);
 
-        Map<String, String> claims = new HashMap<>();
-        claims.put("userId", matrimonyUser.getId());
-        claims.put("phone", matrimonyUser.getPhoneNumber());
-        claims.put("verified", matrimonyUser.getVerified().toString());
-
-        String jwt = jjwt.generateJwt(claims, 180l);
+        String jwt = createUserToken(matrimonyUser);
         matrimonyUser.setAuthenticationToken(jwt);
 
         return matrimonyUser;
@@ -119,11 +114,7 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
             createPassword(password, matrimonyUser);
             markUserVerified(matrimonyUser);
 
-            Map<String, String> claims = new HashMap<>();
-            claims.put("userId", matrimonyUser.getId());
-            claims.put("phone", matrimonyUser.getPhoneNumber());
-            claims.put("verified", matrimonyUser.getVerified().toString());
-            String jwt = jjwt.generateJwt(claims, 180l);
+            String jwt = createUserToken(matrimonyUser);
 
             return jwt;
         }
@@ -142,13 +133,17 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         markUserVerified(matrimonyUser);
 
 
+        String jwt = createUserToken(matrimonyUser);
+
+        return jwt;
+    }
+
+    private String createUserToken(MatrimonyUser matrimonyUser) {
         Map<String, String> claims = new HashMap<>();
         claims.put("userId", matrimonyUser.getId());
         claims.put("phone", matrimonyUser.getPhoneNumber());
         claims.put("verified", matrimonyUser.getVerified().toString());
-        String jwt = jjwt.generateJwt(claims, 180l);
-
-        return jwt;
+        return jjwt.generateJwt(claims, 180l);
     }
 
     @Override

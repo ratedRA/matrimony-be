@@ -5,6 +5,10 @@ import com.matrimony.identity.data.LoginRequest;
 import com.matrimony.identity.data.UserRegistrationRequest;
 import com.matrimony.identity.facade.IdentityServiceFacade;
 import com.matrimony.identity.model.MatrimonyUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +42,16 @@ public class IdentityServiceController {
         return new ResponseEntity(responseBuilder.returnSuccess(loggedInUser), HttpStatus.ACCEPTED);
     }
 
+    @ApiOperation(
+            value = "verify otp, create password, returns auth token",
+            response = String.class)
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            code = 202,
+                            message = "auth token to be used in Authorization header",
+                            response = String.class)
+            })
     @GetMapping("/pub/1/user/verifyOtp/{userId}")
     @ResponseBody
     public ResponseEntity<String> verifyOtp(@PathVariable String userId, @RequestParam String otp, @RequestParam String password){
@@ -51,6 +65,16 @@ public class IdentityServiceController {
         return new ResponseEntity(responseBuilder.returnSuccess("hello"), HttpStatus.ACCEPTED);
     }
 
+    @ApiOperation(
+            value = "returns authenticated user based on auth token, auth token to be sent in Authorization header with Bearer prefix",
+            response = String.class)
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            code = 202,
+                            message = "authenticated user",
+                            response = MatrimonyUser.class)
+            })
     @GetMapping("/1/user/authenticated")
     public ResponseEntity<MatrimonyUser> authenticatedUser() {
         MatrimonyUser authenticatedUser = identityServiceFacade.getAuthenticatedUser();
