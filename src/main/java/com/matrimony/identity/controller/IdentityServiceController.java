@@ -41,8 +41,8 @@ public class IdentityServiceController {
     @GetMapping("/pub/1/user/verifyOtp/{userId}")
     @ResponseBody
     public ResponseEntity<String> verifyOtp(@PathVariable String userId, @RequestParam String otp, @RequestParam String password){
-        identityServiceFacade.verifyOtp(userId, otp, password);
-        return new ResponseEntity(responseBuilder.returnSuccess("successful"), HttpStatus.ACCEPTED);
+        String token = identityServiceFacade.verifyOtp(userId, otp, password);
+        return new ResponseEntity(responseBuilder.returnSuccess(token), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/pub/hello")

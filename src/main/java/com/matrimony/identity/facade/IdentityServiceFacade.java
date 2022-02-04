@@ -8,7 +8,7 @@ public interface IdentityServiceFacade {
 
     MatrimonyUser register(UserRegistrationRequest registrationRequest);
 
-    void verifyOtp(String userId, String otp, String password);
+    String verifyOtp(String userId, String otp, String password);
 
     MatrimonyUser login(LoginRequest loginRequest);
 

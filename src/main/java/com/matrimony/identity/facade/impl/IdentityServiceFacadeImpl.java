@@ -106,7 +106,7 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
     }
 
     @Override
-    public void verifyOtp(String userId, String otp, String password) {
+    public String verifyOtp(String userId, String otp, String password) {
         assert (userId !=null);
         assert StringUtils.isNotBlank(otp);
 
@@ -133,6 +133,15 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         }
         createPassword(password, matrimonyUser);
         markUserVerified(matrimonyUser);
+
+
+        Map<String, String> claims = new HashMap<>();
+        claims.put("userId", matrimonyUser.getId());
+        claims.put("phone", matrimonyUser.getPhoneNumber());
+        claims.put("verified", matrimonyUser.getVerified().toString());
+        String jwt = jjwt.generateJwt(claims, 180l);
+
+        return jwt;
     }
 
     @Override
