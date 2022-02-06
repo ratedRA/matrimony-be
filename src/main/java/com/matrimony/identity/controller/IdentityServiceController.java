@@ -2,6 +2,7 @@ package com.matrimony.identity.controller;
 
 import com.matrimony.common.ResponseBuilder;
 import com.matrimony.identity.data.LoginRequest;
+import com.matrimony.identity.data.PasswordCreateRequest;
 import com.matrimony.identity.data.UserRegistrationRequest;
 import com.matrimony.identity.facade.IdentityServiceFacade;
 import com.matrimony.identity.model.MatrimonyUser;
@@ -54,10 +55,10 @@ public class IdentityServiceController {
                             message = "auth token to be used in Authorization header",
                             response = String.class)
             })
-    @GetMapping("/pub/1/user/verifyOtp/{userId}")
+    @PostMapping("/pub/1/user/verifyOtp")
     @ResponseBody
-    public ResponseEntity<String> verifyOtp(@PathVariable String userId, @RequestParam String otp, @RequestParam String password){
-        String token = identityServiceFacade.verifyOtp(userId, otp, password);
+    public ResponseEntity<String> verifyOtp(@RequestBody PasswordCreateRequest passwordCreateRequest){
+        String token = identityServiceFacade.verifyOtp(passwordCreateRequest.getUserId(), passwordCreateRequest.getOtp(), passwordCreateRequest.getPassword());
         return new ResponseEntity(responseBuilder.returnSuccess(token), HttpStatus.ACCEPTED);
     }
 
