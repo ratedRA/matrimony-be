@@ -25,7 +25,7 @@ public class SpringFoxConfig {
 
     private ApiInfo metaData() {
         ApiInfo apiInfo = new ApiInfo(
-                "Spring Boot REST API",
+                "author @ratedRa",
                 "Spring Boot REST API for Online Store",
                 "1.0",
                 "Terms of service",
