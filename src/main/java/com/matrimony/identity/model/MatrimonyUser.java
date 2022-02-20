@@ -1,13 +1,15 @@
 package com.matrimony.identity.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.matrimony.identity.data.Gender;
+import com.matrimony.identity.data.MaritalStatus;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Document(value = "user")
 public class MatrimonyUser implements Serializable {
@@ -25,7 +27,11 @@ public class MatrimonyUser implements Serializable {
     private String firstName;
     private String middleName;
     private String lastName;
-    private String dob;
+    private String age;
+    private Gender gender;
+    private MaritalStatus maritalStatus;
+    private String bio;
+    private List<String> tags;
 
     // contact info
     @Indexed(unique = true)
@@ -39,6 +45,12 @@ public class MatrimonyUser implements Serializable {
     private Boolean verified = Boolean.FALSE;
     private String lastSentOtp;
     private Date lastSentOtpDate;
+
+    // social info
+    private String instagramId;
+    private String facebookId;
+    private String pinterestId;
+    private String snapchatId;
 
     // registration info
     private Date createdDate;
@@ -101,12 +113,12 @@ public class MatrimonyUser implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getDob() {
-        return dob;
+    public String getAge() {
+        return age;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getPhoneNumber() {
@@ -187,5 +199,69 @@ public class MatrimonyUser implements Serializable {
 
     public void setAuthenticationToken(String authenticationToken) {
         this.authenticationToken = authenticationToken;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public String getInstagramId() {
+        return instagramId;
+    }
+
+    public void setInstagramId(String instagramId) {
+        this.instagramId = instagramId;
+    }
+
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
+
+    public String getPinterestId() {
+        return pinterestId;
+    }
+
+    public void setPinterestId(String pinterestId) {
+        this.pinterestId = pinterestId;
+    }
+
+    public String getSnapchatId() {
+        return snapchatId;
+    }
+
+    public void setSnapchatId(String snapchatId) {
+        this.snapchatId = snapchatId;
     }
 }
