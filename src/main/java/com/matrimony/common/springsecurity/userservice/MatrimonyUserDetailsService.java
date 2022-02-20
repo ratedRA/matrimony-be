@@ -8,8 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MatrimonyUserDetailsService implements UserDetailsService {
@@ -19,8 +21,9 @@ public class MatrimonyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String phoneNo) throws UsernameNotFoundException {
-        MatrimonyUser matrimonyUser = userRepository.findByPhone(phoneNo).get(0);
-        User securityUser = new User(matrimonyUser.getUserId(), matrimonyUser.getPassword(), new ArrayList<>());
+        List<MatrimonyUser> byPhone = userRepository.findByPhone(phoneNo);
+        Assert.notEmpty(byPhone, "no user found with given phone");
+        User securityUser = new User(byPhone.get(0).getUserId(), byPhone.get(0).getPassword(), new ArrayList<>());
         return securityUser;
     }
 }
