@@ -1,12 +1,13 @@
 package com.matrimony.identity.controller;
 
 import com.matrimony.common.ResponseBuilder;
+import com.matrimony.common.orika.OrikaBoundMapperFacade;
 import com.matrimony.identity.data.LoginRequest;
 import com.matrimony.identity.data.PasswordCreateRequest;
+import com.matrimony.identity.data.User;
 import com.matrimony.identity.data.UserRegistrationRequest;
 import com.matrimony.identity.facade.IdentityServiceFacade;
 import com.matrimony.identity.model.MatrimonyUser;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -20,8 +21,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -32,6 +33,8 @@ public class IdentityServiceController {
     private ResponseBuilder responseBuilder;
 
     @Autowired private IdentityServiceFacade identityServiceFacade;
+
+    private static final OrikaBoundMapperFacade<MatrimonyUser, User> USER_MAPPER = new OrikaBoundMapperFacade<>(MatrimonyUser.class, User.class);
 
     @PostMapping("/1/user/register")
     @ResponseBody
@@ -82,8 +85,14 @@ public class IdentityServiceController {
                             response = MatrimonyUser.class)
             })
     @GetMapping("/1/user/authenticated")
-    public ResponseEntity<MatrimonyUser> authenticatedUser() {
+    public ResponseEntity<User> authenticatedUser() {
         MatrimonyUser authenticatedUser = identityServiceFacade.getAuthenticatedUser();
-        return new ResponseEntity(responseBuilder.returnSuccess(authenticatedUser), HttpStatus.CREATED);
+        User user = USER_MAPPER.writeToD(authenticatedUser);
+        return new ResponseEntity(responseBuilder.returnSuccess(user), HttpStatus.OK);
+    }
+
+    @PutMapping("/1/user/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable String userId, @RequestBody User user){
+        return new ResponseEntity(responseBuilder.returnSuccess(new User()), HttpStatus.ACCEPTED);
     }
 }
