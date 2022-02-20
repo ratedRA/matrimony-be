@@ -1,20 +1,18 @@
 package com.matrimony.identity.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@ApiModel
 public class User implements Serializable {
 
     private String id;
 
-    // credentials
-    // private String userName -> should be same as phone number;
-    private String password;
+
     private String authenticationToken;
 
     // personal info
@@ -22,7 +20,9 @@ public class User implements Serializable {
     private String middleName;
     private String lastName;
     private String age;
+    @ApiModelProperty(dataType = "string", allowableValues = "MALE, FEMALE, OTHER", notes = "tesing the vlas")
     private Gender gender;
+    @ApiModelProperty(allowableValues = "MARRIED, SINGLE, DIVORCED, UNMARRIED")
     private MaritalStatus maritalStatus;
     private String bio;
     private List<String> tags;
@@ -55,14 +55,6 @@ public class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getAuthenticationToken() {

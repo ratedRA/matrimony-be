@@ -13,4 +13,6 @@ public interface IdentityServiceFacade {
     MatrimonyUser login(LoginRequest loginRequest);
 
     MatrimonyUser getAuthenticatedUser();
+
+    MatrimonyUser update(MatrimonyUser matrimonyUser);
 }

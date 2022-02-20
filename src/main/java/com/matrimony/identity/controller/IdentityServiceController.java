@@ -38,16 +38,20 @@ public class IdentityServiceController {
 
     @PostMapping("/1/user/register")
     @ResponseBody
-    public ResponseEntity<MatrimonyUser> register(@RequestBody UserRegistrationRequest registrationRequest){
+    public ResponseEntity<User> register(@RequestBody UserRegistrationRequest registrationRequest){
         MatrimonyUser user = identityServiceFacade.register(registrationRequest);
-        return new ResponseEntity(responseBuilder.returnSuccess(user), HttpStatus.CREATED);
+        User responseUser = USER_MAPPER.writeToD(user);
+
+        return new ResponseEntity(responseBuilder.returnSuccess(responseUser), HttpStatus.CREATED);
     }
 
     @PostMapping("/1/user/login")
     @ResponseBody
-    public ResponseEntity<MatrimonyUser> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest){
         MatrimonyUser loggedInUser = identityServiceFacade.login(loginRequest);
-        return new ResponseEntity(responseBuilder.returnSuccess(loggedInUser), HttpStatus.ACCEPTED);
+        User responseUser = USER_MAPPER.writeToD(loggedInUser);
+
+        return new ResponseEntity(responseBuilder.returnSuccess(responseUser), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(
@@ -92,7 +96,21 @@ public class IdentityServiceController {
     }
 
     @PutMapping("/1/user/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable String userId, @RequestBody User user){
-        return new ResponseEntity(responseBuilder.returnSuccess(new User()), HttpStatus.ACCEPTED);
+    @ApiOperation(
+            value = "updates user profile fields, doesn't update phoneno or authToken",
+            response = String.class)
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            code = 200,
+                            message = "user",
+                            response = User.class)
+            })
+    public ResponseEntity<User> updateUser(@PathVariable String userId, @RequestBody User requestUser){
+        MatrimonyUser matrimonyUser = USER_MAPPER.writeToS(requestUser);
+        matrimonyUser.setId(userId);
+        MatrimonyUser updatedUser = identityServiceFacade.update(matrimonyUser);
+        User responseUser = USER_MAPPER.writeToD(updatedUser);
+        return new ResponseEntity(responseBuilder.returnSuccess(responseUser), HttpStatus.ACCEPTED);
     }
 }

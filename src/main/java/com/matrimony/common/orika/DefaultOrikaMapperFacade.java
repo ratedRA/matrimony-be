@@ -2,7 +2,6 @@ package com.matrimony.common.orika;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
-import org.springframework.stereotype.Component;
 
 public class DefaultOrikaMapperFacade<S, D> implements OrikaMapperFacade<S, D>{
     private Class<S> sClass;
@@ -13,7 +12,7 @@ public class DefaultOrikaMapperFacade<S, D> implements OrikaMapperFacade<S, D>{
         this.dClass = dClass;
     }
 
-    private MapperFacade getMapperFacade() {
+    protected MapperFacade getMapperFacade() {
         MapperFactory mapperFactory = getMapperFactory();
         mapperFactory.classMap(sClass, dClass).byDefault();
         return mapperFactory.getMapperFacade();

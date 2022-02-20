@@ -1,5 +1,6 @@
 package com.matrimony.identity.facade.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matrimony.common.GuavaCache;
 import com.matrimony.common.exceptionhandling.customexceptions.DuplicateUserException;
 import com.matrimony.common.matrimonytoken.JjwtImpl;
@@ -9,11 +10,15 @@ import com.matrimony.identity.data.UserRegistrationRequest;
 import com.matrimony.identity.facade.IdentityServiceFacade;
 import com.matrimony.identity.model.MatrimonyUser;
 import com.matrimony.identity.repository.mongo.UserRepository;
+import com.mongodb.client.result.UpdateResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +32,7 @@ import org.springframework.util.Assert;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -152,6 +158,32 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         UserDetails authenticatedUser = (UserDetails) authentication.getPrincipal();
         MatrimonyUser matrimonyUser = loadUserById(authenticatedUser.getUsername());
         return matrimonyUser;
+    }
+
+    @Override
+    public MatrimonyUser update(MatrimonyUser matrimonyUser) {
+
+        // removing null fields from user request
+        matrimonyUser.setAuthenticationToken(null);
+        ObjectMapper oMapper = new ObjectMapper();
+        Map<String, Object> dataMap = oMapper.convertValue(matrimonyUser, Map.class);
+        dataMap.values().removeIf(Objects::isNull);
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(matrimonyUser.getId()));
+
+        Update update = new Update();
+        dataMap.forEach(update::set);
+
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, MatrimonyUser.class);
+
+        Assert.isTrue(updateResult.getMatchedCount() > 0, "No user found with provided id");
+
+        MatrimonyUser updatedUser = mongoTemplate.findOne(query, MatrimonyUser.class);
+
+        userCache.put(updatedUser.getId(), updatedUser);
+
+        return updatedUser;
     }
 
     private void createPassword(String password, MatrimonyUser matrimonyUser) {
