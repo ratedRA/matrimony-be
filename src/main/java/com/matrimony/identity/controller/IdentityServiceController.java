@@ -93,6 +93,7 @@ public class IdentityServiceController {
                             response = MatrimonyUser.class)
             })
     @GetMapping("/1/user/authenticated")
+    @ResponseBody
     public ResponseEntity<User> authenticatedUser() {
         MatrimonyUser authenticatedUser = identityServiceFacade.getAuthenticatedUser();
         User user = USER_MAPPER.writeToD(authenticatedUser);
@@ -110,6 +111,7 @@ public class IdentityServiceController {
                             response = User.class)
             })
     @PutMapping("/1/user/{userId}")
+    @ResponseBody
     public ResponseEntity<User> updateUser(@PathVariable String userId, @RequestBody User requestUser){
         MatrimonyUser matrimonyUser = USER_MAPPER.writeToS(requestUser);
         matrimonyUser.setId(userId);
@@ -119,7 +121,7 @@ public class IdentityServiceController {
     }
 
     @ApiOperation(
-            value = "search users based on filters, \n tags and socialIds should be sent in searchTerm field \n It is pageable, by default pageStart is 0 and pageSize is 10",
+            value = "search users based on filters, \n tags and socialIds should be sent in searchTerm field, \n It is pageable, by default pageStart is 0 and pageSize is 10",
             response = List.class)
     @ApiResponses(
             value = {
@@ -129,6 +131,7 @@ public class IdentityServiceController {
                             response = List.class)
             })
     @GetMapping("/1/user/search")
+    @ResponseBody
     public ResponseEntity<List<User>> search(UserFilter userFilter){
         List<MatrimonyUser> matrimonyUsers = identityServiceFacade.search(userFilter);
         List<User> matchedUsers = matrimonyUsers.stream().map(matrimonyUser -> USER_MAPPER.writeToD(matrimonyUser)).collect(Collectors.toList());
