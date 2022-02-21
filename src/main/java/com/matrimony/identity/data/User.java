@@ -19,7 +19,7 @@ public class User implements Serializable {
     private String firstName;
     private String middleName;
     private String lastName;
-    private String age;
+    private Integer age;
     @ApiModelProperty(dataType = "string", allowableValues = "MALE, FEMALE, OTHER", notes = "tesing the vlas")
     private Gender gender;
     @ApiModelProperty(allowableValues = "MARRIED, SINGLE, DIVORCED, UNMARRIED")
@@ -89,11 +89,11 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

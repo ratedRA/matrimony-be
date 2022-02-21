@@ -5,6 +5,7 @@ import com.matrimony.common.GuavaCache;
 import com.matrimony.common.exceptionhandling.customexceptions.DuplicateUserException;
 import com.matrimony.common.matrimonytoken.JjwtImpl;
 import com.matrimony.identity.data.LoginRequest;
+import com.matrimony.identity.data.UserFilter;
 import com.matrimony.identity.data.UserOtpDetail;
 import com.matrimony.identity.data.UserRegistrationRequest;
 import com.matrimony.identity.facade.IdentityServiceFacade;
@@ -15,10 +16,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,9 +33,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -184,6 +192,62 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         userCache.put(updatedUser.getId(), updatedUser);
 
         return updatedUser;
+    }
+
+    @Override
+    public List<MatrimonyUser> search(UserFilter userFilter) {
+        List<MatrimonyUser> matrimonyUserList = new ArrayList<>();
+
+        Pageable pageable = PageRequest.of(userFilter.getPageStart() != null ? userFilter.getPageStart() : 0, userFilter.getPageSize() != null ? userFilter.getPageSize() : 10);
+
+        Query query = new Query().with(pageable);
+        List<Criteria> criteriaList = new ArrayList<>();
+
+        if (userFilter.getMinAge() != null || userFilter.getMaxAge() != null) {
+            if(userFilter.getMinAge() == null){
+                userFilter.setMinAge(UserFilter.DEFAULT_MIN_AGE);
+            }
+
+            if(userFilter.getMaxAge() == null){
+                userFilter.setMaxAge(UserFilter.DEFAULT_MAX_AGE);
+            }
+            criteriaList.add(Criteria.where("age").gte(userFilter.getMinAge()).lte(userFilter.getMaxAge()));
+        }
+
+        if (userFilter.getGender() != null) {
+            criteriaList.add(Criteria.where("gender").is(userFilter.getGender()));
+        }
+
+        if (userFilter.getMaritalStatus() != null) {
+            criteriaList.add(Criteria.where("maritalStatus").is(userFilter.getMaritalStatus()));
+        }
+
+        if(StringUtils.isNotBlank(userFilter.getSearchTerm())){
+            Criteria criteria = new Criteria();
+
+            criteria.orOperator(Criteria.where("tags").in(userFilter.getSearchTerm()), Criteria.where("instagramId").is(userFilter.getSearchTerm())
+                    ,Criteria.where("facebookId").is(userFilter.getSearchTerm())
+                    ,Criteria.where("pinterestId").is(userFilter.getSearchTerm())
+                    ,Criteria.where("snapchatId").is(userFilter.getSearchTerm()));
+
+            criteriaList.add(criteria);
+        }
+
+        if(!CollectionUtils.isEmpty(criteriaList)){
+            query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
+        }
+
+        Page<MatrimonyUser> page = PageableExecutionUtils.getPage(
+                mongoTemplate.find(query, MatrimonyUser.class),
+                pageable,
+                () -> mongoTemplate.count(query.skip(0).limit(0), MatrimonyUser.class)
+        );
+
+        if(page != null && !CollectionUtils.isEmpty(page.getContent())){
+            matrimonyUserList = page.getContent();
+        }
+
+        return matrimonyUserList;
     }
 
     private void createPassword(String password, MatrimonyUser matrimonyUser) {

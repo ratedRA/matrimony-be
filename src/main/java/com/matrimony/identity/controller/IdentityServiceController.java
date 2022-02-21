@@ -5,6 +5,7 @@ import com.matrimony.common.orika.OrikaBoundMapperFacade;
 import com.matrimony.identity.data.LoginRequest;
 import com.matrimony.identity.data.PasswordCreateRequest;
 import com.matrimony.identity.data.User;
+import com.matrimony.identity.data.UserFilter;
 import com.matrimony.identity.data.UserRegistrationRequest;
 import com.matrimony.identity.facade.IdentityServiceFacade;
 import com.matrimony.identity.model.MatrimonyUser;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
@@ -95,7 +99,6 @@ public class IdentityServiceController {
         return new ResponseEntity(responseBuilder.returnSuccess(user), HttpStatus.OK);
     }
 
-    @PutMapping("/1/user/{userId}")
     @ApiOperation(
             value = "updates user profile fields, doesn't update phoneno or authToken",
             response = String.class)
@@ -106,11 +109,29 @@ public class IdentityServiceController {
                             message = "user",
                             response = User.class)
             })
+    @PutMapping("/1/user/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable String userId, @RequestBody User requestUser){
         MatrimonyUser matrimonyUser = USER_MAPPER.writeToS(requestUser);
         matrimonyUser.setId(userId);
         MatrimonyUser updatedUser = identityServiceFacade.update(matrimonyUser);
         User responseUser = USER_MAPPER.writeToD(updatedUser);
         return new ResponseEntity(responseBuilder.returnSuccess(responseUser), HttpStatus.ACCEPTED);
+    }
+
+    @ApiOperation(
+            value = "search users based on filters, tags and socialIds should be sent in searchTerm field",
+            response = String.class)
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            code = 200,
+                            message = "list of matched users",
+                            response = List.class)
+            })
+    @GetMapping("/1/user/search")
+    public ResponseEntity<List<User>> search(UserFilter userFilter){
+        List<MatrimonyUser> matrimonyUsers = identityServiceFacade.search(userFilter);
+        List<User> matchedUsers = matrimonyUsers.stream().map(matrimonyUser -> USER_MAPPER.writeToD(matrimonyUser)).collect(Collectors.toList());
+        return new ResponseEntity(responseBuilder.returnSuccess(matchedUsers), HttpStatus.ACCEPTED);
     }
 }

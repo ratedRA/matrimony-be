@@ -27,7 +27,7 @@ public class MatrimonyUser implements Serializable {
     private String firstName;
     private String middleName;
     private String lastName;
-    private String age;
+    private Integer age;
     private Gender gender;
     private MaritalStatus maritalStatus;
     private String bio;
@@ -113,11 +113,11 @@ public class MatrimonyUser implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
