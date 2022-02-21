@@ -119,8 +119,8 @@ public class IdentityServiceController {
     }
 
     @ApiOperation(
-            value = "search users based on filters, tags and socialIds should be sent in searchTerm field",
-            response = String.class)
+            value = "search users based on filters, \n tags and socialIds should be sent in searchTerm field \n It is pageable, by default pageStart is 0 and pageSize is 10",
+            response = List.class)
     @ApiResponses(
             value = {
                     @ApiResponse(
