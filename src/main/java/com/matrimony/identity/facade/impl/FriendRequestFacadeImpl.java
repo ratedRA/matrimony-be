@@ -3,12 +3,17 @@ package com.matrimony.identity.facade.impl;
 import com.matrimony.identity.data.FriendRequestStatus;
 import com.matrimony.identity.data.FriendRequestType;
 import com.matrimony.identity.facade.FriendRequestFacade;
+import com.matrimony.identity.model.FriendList;
 import com.matrimony.identity.model.FriendRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class FriendRequestFacadeImpl  implements FriendRequestFacade {
@@ -47,10 +52,10 @@ public class FriendRequestFacadeImpl  implements FriendRequestFacade {
                 break;
 
             case ACCEPT:
-                if(existingRequest != null && existingRequest.getId() == null){
+                if(existingRequest == null){
                     throw new RuntimeException("Request doesn't exist to accept");
                 }
-                if(existingRequest != null && existingRequest.getStatus() != null && existingRequest.getStatus().equals(FriendRequestStatus.ACCEPTED)){
+                if(existingRequest.getStatus() != null && existingRequest.getStatus().equals(FriendRequestStatus.ACCEPTED)){
                     throw new RuntimeException("Already friends");
                 }
 
@@ -58,6 +63,10 @@ public class FriendRequestFacadeImpl  implements FriendRequestFacade {
                 savedRequest = mongoTemplate.save(existingRequest);
 
                 // update friendList table
+                addNewFriend(friendRequest.getFromUserId(), friendRequest.getToUserId());
+
+                addNewFriend(friendRequest.getToUserId(), friendRequest.getFromUserId());
+
                 break;
 
             case IGNORE:
@@ -75,5 +84,22 @@ public class FriendRequestFacadeImpl  implements FriendRequestFacade {
 
         }
         return savedRequest;
+    }
+
+    private void addNewFriend(String primaryUserId, String newFriendUserId) {
+        Query requestingUserFriendListQuery = new Query();
+        requestingUserFriendListQuery.addCriteria(Criteria.where("userId").is(primaryUserId));
+        FriendList requestingUserFriendList = mongoTemplate.findOne(requestingUserFriendListQuery, FriendList.class);
+
+        List<String> fromUserList = new ArrayList<>();
+        if (requestingUserFriendList == null) {
+            fromUserList.add(newFriendUserId);
+            mongoTemplate.save(new FriendList(primaryUserId, fromUserList));
+        } else {
+            List<String> friendUserIds = requestingUserFriendList.getFriendUserIds();
+            friendUserIds.add(newFriendUserId);
+            requestingUserFriendList.setFriendUserIds(friendUserIds);
+            mongoTemplate.save(requestingUserFriendList);
+        }
     }
 }
