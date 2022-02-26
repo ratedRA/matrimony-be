@@ -1,25 +1,36 @@
 package com.matrimony.identity.facade.impl;
 
+import com.matrimony.common.orika.OrikaBoundMapperFacade;
 import com.matrimony.identity.data.FriendRequestStatus;
 import com.matrimony.identity.data.FriendRequestType;
-import com.matrimony.identity.facade.FriendRequestFacade;
+import com.matrimony.identity.data.UserPublicProfile;
+import com.matrimony.identity.facade.FriendFacade;
+import com.matrimony.identity.facade.IdentityServiceFacade;
 import com.matrimony.identity.model.FriendList;
 import com.matrimony.identity.model.FriendRequest;
+import com.matrimony.identity.model.MatrimonyUser;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class FriendRequestFacadeImpl  implements FriendRequestFacade {
+public class FriendFacadeImpl implements FriendFacade {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private IdentityServiceFacade identityServiceFacade;
+
+    private static final OrikaBoundMapperFacade<MatrimonyUser, UserPublicProfile> USER_MAPPER = new OrikaBoundMapperFacade<>(MatrimonyUser.class, UserPublicProfile.class);
+
 
     @Override
     public FriendRequest processFriendRequest(FriendRequestType type, FriendRequest friendRequest) {
@@ -86,10 +97,34 @@ public class FriendRequestFacadeImpl  implements FriendRequestFacade {
         return savedRequest;
     }
 
+    @Override
+    public UserPublicProfile publicProfile(String requestingUserId, String requestedUserId) {
+        Assert.isTrue(StringUtils.isNotBlank(requestingUserId) && StringUtils.isNotBlank(requestedUserId), "userIds missing");
+
+        MatrimonyUser requestedUser = identityServiceFacade.loadUserById(requestedUserId);
+
+        Assert.notNull(requestedUser, "user not found");
+
+        UserPublicProfile publicProfile = USER_MAPPER.writeToD(requestedUser);
+
+        FriendList friendList = getFriendList(requestingUserId);
+        if(friendList.isFriend(requestedUserId)){
+            publicProfile.setFriends(Boolean.TRUE);
+        }
+
+        if(!publicProfile.isFriends()){
+            publicProfile.setPhoneNumber(null);
+            publicProfile.setCountryCode(null);
+            publicProfile.setInstagramId(null);
+            publicProfile.setFacebookId(null);
+            publicProfile.setSnapchatId(null);
+        }
+
+        return publicProfile;
+    }
+
     private void addNewFriend(String primaryUserId, String newFriendUserId) {
-        Query requestingUserFriendListQuery = new Query();
-        requestingUserFriendListQuery.addCriteria(Criteria.where("userId").is(primaryUserId));
-        FriendList requestingUserFriendList = mongoTemplate.findOne(requestingUserFriendListQuery, FriendList.class);
+        FriendList requestingUserFriendList = getFriendList(primaryUserId);
 
         List<String> fromUserList = new ArrayList<>();
         if (requestingUserFriendList == null) {
@@ -101,5 +136,11 @@ public class FriendRequestFacadeImpl  implements FriendRequestFacade {
             requestingUserFriendList.setFriendUserIds(friendUserIds);
             mongoTemplate.save(requestingUserFriendList);
         }
+    }
+
+    private FriendList getFriendList(String primaryUserId) {
+        Query requestingUserFriendListQuery = new Query();
+        requestingUserFriendListQuery.addCriteria(Criteria.where("userId").is(primaryUserId));
+        return mongoTemplate.findOne(requestingUserFriendListQuery, FriendList.class);
     }
 }

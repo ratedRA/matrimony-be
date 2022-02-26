@@ -289,7 +289,8 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         return new UserOtpDetail(userById.getLastSentOtp(), userById.getLastSentOtpDate());
     }
 
-    private MatrimonyUser loadUserById(String userId) {
+    @Override
+    public MatrimonyUser loadUserById(String userId) {
         MatrimonyUser userById = userCache.get(userId);
 
         // lazy load if not found in cache

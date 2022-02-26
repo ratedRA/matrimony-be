@@ -47,5 +47,9 @@ public class FriendList {
     public void setFriendUserIds(List<String> friendUserIds) {
         this.friendUserIds = friendUserIds;
     }
+
+    public boolean isFriend(String userId){
+        return this.friendUserIds.contains(userId);
+    }
 }
 

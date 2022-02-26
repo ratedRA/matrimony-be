@@ -20,4 +20,6 @@ public interface IdentityServiceFacade {
     MatrimonyUser update(MatrimonyUser matrimonyUser);
 
     List<MatrimonyUser> search(UserFilter userFilter);
+
+    MatrimonyUser loadUserById(String userId);
 }
