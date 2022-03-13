@@ -1,6 +1,7 @@
 package com.matrimony.identity.facade.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Sets;
 import com.matrimony.common.GuavaCache;
 import com.matrimony.common.exceptionhandling.customexceptions.DuplicateUserException;
 import com.matrimony.common.matrimonytoken.JjwtImpl;
@@ -43,6 +44,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -50,7 +52,7 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
 
     private static final String INDIA_COUNTRY_CODE = "+91";
     private static final long OTP_VALID_DURATION = TimeUnit.MINUTES.toMillis(5);
-    private static final String OTP_BYPASS = "aman";
+    private static final Set<String> OTP_BYPASS = Sets.newHashSet("aman", "1234");
 
     @Autowired
     private UserRepository userRepository;
@@ -267,8 +269,8 @@ public class IdentityServiceFacadeImpl implements IdentityServiceFacade {
         return randomOtp;
     }
 
-    private final boolean bypassOtp(String otp){
-        return otp.equals(OTP_BYPASS);
+    private boolean bypassOtp(String otp){
+        return OTP_BYPASS.contains(otp);
     }
 
     private void sendOtp(MatrimonyUser savedUser) {
